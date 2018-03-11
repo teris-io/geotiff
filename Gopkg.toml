@@ -1,0 +1,13 @@
+[[constraint]]
+  name = "github.com/teris-io/cli"
+  version = "1.0.1"
+  source = "code.teris.io/mirror/go-cli"
+
+[[constraint]]
+  name = "github.com/google/tiff"
+  source = "code.teris.io/mirror/go-tiff"
+
+[[constraint]]
+  name = "github.com/pkg/errors"
+  version = "0.8.0"
+  source = "code.teris.io/mirror/go-errors"
