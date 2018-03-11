@@ -6,10 +6,6 @@ package main
 
 import "fmt"
 
-const (
-	Version = "0.1.1"
-)
-
 func done(err error) int {
 	if err != nil {
 		fmt.Println(fmt.Sprintf("fatal: %s", err.Error()))

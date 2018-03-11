@@ -2,7 +2,7 @@
  * Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
  */
 
-package main
+package exec
 
 import (
 	"os"
@@ -11,7 +11,7 @@ import (
 	_ "github.com/google/tiff/geotiff"
 )
 
-func do(filename string, callback func(tf tiff.TIFF) error) error {
+func DoWithTiff(filename string, callback func(tf tiff.TIFF) error) error {
 	file, err := os.Open(filename)
 	if err != nil {
 		return err

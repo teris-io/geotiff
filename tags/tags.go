@@ -2,33 +2,22 @@
  * Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
  */
 
-package main
+package tags
 
 import (
 	"fmt"
-	"strconv"
+	"io"
 
 	"github.com/google/tiff"
+	"github.com/teris-io/geotiff/exec"
 )
 
-func tags(args []string, options map[string]string) int {
+func PrintTags(writer io.Writer, filename string, page int, verbose bool) error {
 
-	var err error
-	singlepage := false
-	indent := "\t"
+	return exec.DoWithTiff(filename, func(tf tiff.TIFF) error {
+		singlepage := false
+		indent := "\t"
 
-	page := -1
-	if pagestr := options["page"]; pagestr != "" {
-		if page, err = strconv.Atoi(pagestr); err != nil {
-			return done(err)
-		}
-		singlepage = true
-		indent = ""
-	}
-
-	_, verbose := options["verbose"]
-
-	err = do(args[0], func(tf tiff.TIFF) error {
 		ifds := tf.IFDs()
 		fpage := 0
 		lpage := len(ifds) - 1
@@ -38,11 +27,13 @@ func tags(args []string, options map[string]string) int {
 			}
 			fpage = page
 			lpage = page
+			singlepage = true
+			indent = ""
 		}
 
 		for page = fpage; page <= lpage; page++ {
 			if !singlepage {
-				fmt.Println(fmt.Sprintf("Page: %d", page))
+				fmt.Fprintln(writer, fmt.Sprintf("Page: %d", page))
 			}
 			ifd := ifds[page]
 			for _, f := range ifd.Fields() {
@@ -53,11 +44,9 @@ func tags(args []string, options map[string]string) int {
 					repr = append(repr, fmt.Sprintf("...(%d)", len(arr)))
 					value = repr
 				}
-				fmt.Println(fmt.Sprintf("%s%v=%v", indent, f.Tag().Name(), value))
+				fmt.Fprintln(writer, fmt.Sprintf("%s%v=%v", indent, f.Tag().Name(), value))
 			}
 		}
-
 		return nil
 	})
-	return done(err)
 }
