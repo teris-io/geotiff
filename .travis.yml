@@ -11,8 +11,11 @@ before_install:
 script:
   - go build
   - ./geotiff tags testdata/ch_zh_topo_lzw.tiff
+  - go test ./...
+  - go test -coverprofile=cov-cli  -covermode=atomic github.com/teris-io/geotiff
+  - go test -coverprofile=cov-exec -covermode=atomic github.com/teris-io/geotiff/exec
   - go test -coverprofile=cov-tags -covermode=atomic github.com/teris-io/geotiff/tags
 
 after_success:
-  - cat cov-tags > coverage.txt
+  - cat cov-cli cov-exec cov-tags > coverage.txt
   - codecov

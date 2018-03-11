@@ -13,13 +13,12 @@ import (
 
 const filename = "../testdata/ch_zh_topo_lzw.tiff"
 
-func TestExtract(t *testing.T) {
+func TestExtract_Ok(t *testing.T) {
 	var tgs []map[string]interface{}
-	err := exec.DoWithTiff(filename, func(tf tiff.TIFF) error {
+	if err := exec.DoWithTiff(filename, func(tf tiff.TIFF) error {
 		tgs = tags.Extract(tf)
 		return nil
-	})
-	if err != nil {
+	}); err != nil {
 		t.Fatal(err.Error())
 	}
 	if len(tgs) != 1 {

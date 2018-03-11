@@ -10,17 +10,17 @@ import (
 	_ "github.com/google/tiff/geotiff"
 )
 
-func DoWithTiff(filename string, callback func(tf tiff.TIFF) error) error {
-	file, err := os.Open(filename)
-	if err != nil {
+func DoWithTiff(filename string, callback func(tiff.TIFF) error) (err error) {
+	var file * os.File
+	if file, err = os.Open(filename); err != nil {
 		return err
 	}
 	defer file.Close()
 
 	r := tiff.NewReadAtReadSeeker(file)
-	t, err := tiff.Parse(r, tiff.DefaultTagSpace, tiff.DefaultFieldTypeSpace)
-	if err != nil {
+	var tf tiff.TIFF
+	if tf, err = tiff.Parse(r, tiff.DefaultTagSpace, tiff.DefaultFieldTypeSpace); err != nil {
 		return err
 	}
-	return callback(t)
+	return callback(tf)
 }
