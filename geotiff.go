@@ -30,7 +30,7 @@ func main() {
 				}
 			}
 			_, verbose := options["verbose"]
-			return done(tags.PrintTags(os.Stdout, args[0], page, verbose))
+			return done(tags.FprintForFile(os.Stdout, args[0], page, verbose))
 		})
 
 	versionCmd := cli.NewCommand("version", "Show version information").
