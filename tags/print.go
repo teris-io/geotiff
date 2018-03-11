@@ -32,12 +32,8 @@ func Fprint(w io.Writer, tags []map[string]interface{}, prettify, verbose bool) 
 		}
 
 		sort.Strings(out)
-		for i, o := range out {
-			if i < len(out)-1 {
-				fmt.Fprintln(w, o)
-			} else {
-				fmt.Fprint(w, o)
-			}
+		for _, o := range out {
+			fmt.Fprintln(w, o)
 		}
 	}
 }

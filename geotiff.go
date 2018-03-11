@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 
@@ -12,7 +13,10 @@ import (
 )
 
 func main() {
+	os.Exit(Run(os.Args, os.Stdout))
+}
 
+func Run(args []string, w io.Writer) int {
 	tagsCmd := cli.NewCommand("tags", "Print image tags").
 		WithShortcut("t").
 		WithArg(cli.NewArg("filename", "GeoTIFF file name")).
@@ -28,13 +32,13 @@ func main() {
 				}
 			}
 			_, verbose := options["verbose"]
-			return done(tags.FprintForFile(os.Stdout, args[0], page, verbose))
+			return done(tags.FprintForFile(w, args[0], page, verbose))
 		})
 
 	versionCmd := cli.NewCommand("version", "Show version information").
 		WithShortcut("v").
 		WithAction(func(args []string, options map[string]string) int {
-			fmt.Println(Version)
+			fmt.Fprintln(w, Version)
 			return 0
 		})
 
@@ -42,5 +46,5 @@ func main() {
 		WithCommand(tagsCmd).
 		WithCommand(versionCmd)
 
-	os.Exit(app.Run(os.Args, os.Stdout))
+	return app.Run(args, w)
 }

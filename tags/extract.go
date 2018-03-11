@@ -4,6 +4,7 @@ package tags
 
 import "github.com/google/tiff"
 
+// Extract collects tag name to value maps for all pages in the TIFF
 func Extract(tf tiff.TIFF) (tags []map[string]interface{}) {
 	for _, ifd := range tf.IFDs() {
 		data := make(map[string]interface{})

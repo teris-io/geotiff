@@ -10,8 +10,9 @@ import (
 	_ "github.com/google/tiff/geotiff"
 )
 
+// DoWithTiff executes a function with TIFF file handler for filename
 func DoWithTiff(filename string, callback func(tiff.TIFF) error) (err error) {
-	var file * os.File
+	var file *os.File
 	if file, err = os.Open(filename); err != nil {
 		return err
 	}
