@@ -7,7 +7,7 @@ package main
 import "fmt"
 
 const (
-	Version = "0.1.0"
+	Version = "0.1.1"
 )
 
 func done(err error) int {

@@ -13,11 +13,11 @@ import (
 
 func main() {
 
-	tagsCmd := cli.NewCommand("tags", "Query image tags").
+	tagsCmd := cli.NewCommand("tags", "Print image tags").
 		WithShortcut("t").
-		WithArg(cli.NewArg("file", "GeoTIFF file name")).
-		WithOption(cli.NewOption("page", "Page to read tags for (default: all pages)").WithChar('p')).
-		WithOption(cli.NewOption("quiet", "Quiet output dropping all auxiliary information").WithChar('q').WithType(cli.TypeBool)).
+		WithArg(cli.NewArg("filename", "GeoTIFF file name")).
+		WithOption(cli.NewOption("page", "Page to read tags for (0-based, default: all pages)").WithChar('p').WithType(cli.TypeInt)).
+		WithOption(cli.NewOption("verbose", "Verbose output of arrays").WithChar('v').WithType(cli.TypeBool)).
 		WithAction(tags)
 
 	versionCmd := cli.NewCommand("version", "Show version information").
@@ -27,7 +27,7 @@ func main() {
 			return 0
 		})
 
-	app := cli.New("Command line utility to work with GeoTIFF files").
+	app := cli.New("CLI to work with GeoTIFF files").
 		WithCommand(tagsCmd).
 		WithCommand(versionCmd)
 

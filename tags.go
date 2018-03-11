@@ -14,14 +14,19 @@ import (
 func tags(args []string, options map[string]string) int {
 
 	var err error
+	singlepage := false
+	indent := "\t"
+
 	page := -1
 	if pagestr := options["page"]; pagestr != "" {
 		if page, err = strconv.Atoi(pagestr); err != nil {
 			return done(err)
 		}
+		singlepage = true
+		indent = ""
 	}
 
-	_, quiet := options["quiet"]
+	_, verbose := options["verbose"]
 
 	err = do(args[0], func(tf tiff.TIFF) error {
 		ifds := tf.IFDs()
@@ -36,19 +41,19 @@ func tags(args []string, options map[string]string) int {
 		}
 
 		for page = fpage; page <= lpage; page++ {
-			if !quiet {
+			if !singlepage {
 				fmt.Println(fmt.Sprintf("Page: %d", page))
 			}
 			ifd := ifds[page]
 			for _, f := range ifd.Fields() {
 				value := f.ParsedValue()
-				if arr, ok := value.([]interface{}); ok && len(arr) > 10 {
+				if arr, ok := value.([]interface{}); ok && len(arr) > 10 && !verbose {
 					var repr []interface{}
 					repr = append(repr, arr[:10]...)
 					repr = append(repr, fmt.Sprintf("...(%d)", len(arr)))
 					value = repr
 				}
-				fmt.Println(fmt.Sprintf("  %v=%v", f.Tag().Name(), value))
+				fmt.Println(fmt.Sprintf("%s%v=%v", indent, f.Tag().Name(), value))
 			}
 		}
 
