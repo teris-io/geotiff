@@ -1,6 +1,4 @@
-/*
- * Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
- */
+// Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
 
 package tags_test
 
@@ -13,7 +11,6 @@ import (
 	"github.com/teris-io/geotiff/exec"
 	"github.com/teris-io/geotiff/tags"
 )
-
 
 type strwriter struct {
 	str string

@@ -1,6 +1,4 @@
-/*
- * Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
- */
+// Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
 
 package exec
 
@@ -8,6 +6,7 @@ import (
 	"os"
 
 	"github.com/google/tiff"
+	// provides geotiff extensions for the standard tiff library
 	_ "github.com/google/tiff/geotiff"
 )
 

@@ -1,6 +1,4 @@
-/*
- * Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
- */
+// Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
 
 package tags_test
 

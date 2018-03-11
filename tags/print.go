@@ -1,6 +1,4 @@
-/*
- * Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
- */
+// Copyright (c) Oleg Sklyar & teris.io, 2018. All rights reserved.
 
 package tags
 
@@ -35,7 +33,7 @@ func Fprint(w io.Writer, tags []map[string]interface{}, prettify, verbose bool) 
 
 		sort.Strings(out)
 		for i, o := range out {
-			if i < len(out) - 1 {
+			if i < len(out)-1 {
 				fmt.Fprintln(w, o)
 			} else {
 				fmt.Fprint(w, o)
